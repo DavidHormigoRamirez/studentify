@@ -5,7 +5,7 @@ files:
     destination: /opt/tomcat/webapps/
     file_exists_behavior: OVERWRITE
 hooks:
-  ApllicationsStop:
+  ApplicationStop:
     - location: deploy-script/appstop.sh
       timeout: 300
       runas: root
@@ -13,7 +13,7 @@ hooks:
     - location: deploy-script/beforeinstall.sh
       timeout: 300
       runas: root
-  BeforeInstall: 
+  ApplicationStart: 
     - location: deploy-script/appstart.sh
       timeout: 300
       runas: root
