@@ -32,6 +32,7 @@ public class Health {
         this.status = status;
     }
     public String getMessage() {
+        
         return message;
     }
     public void setMessage(String message) {
