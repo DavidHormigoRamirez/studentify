@@ -16,28 +16,27 @@ on:
 
 jobs:
   deploy:
-
     runs-on: ubuntu-22.04
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{github.event.workflow_run.conclusion == 'success'}}
     permissions:
       contents: read
 
-  steps:
-  - uses: actions/checkout@v4
-  - name: aws credentials
-    uses: aws-actions/configure-aws-credentials@v4
-    with: 
-      aws-region: "us-east-1"
-      aws-acces-key-id: ${{secrets.ACCES_KY_ID}}
-      aws-acces-key: ${{secrets.SECRET_ACCES_KY}}
-      aws-session-token: ${{secrets.SESSION_TOKEN}}
+    steps:
+    - uses: actions/checkout@v4
+    - name: aws credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with: 
+        aws-region: "us-east-1"
+        aws-acces-key-id: ${{secrets.ACCES_KY_ID}}
+        aws-acces-key: ${{secrets.SECRET_ACCES_KY}}
+        aws-session-token: ${{secrets.SESSION_TOKEN}}
 
     - name: CodeDeploy
       run: |
         aws deploy create-deployment \
-        --application-name "BackendApp" \
-        --deployment-group-name "BackendApp" \
-        --github-location repository=${{github.repository}}, commitId=${{github.sha}}
+          --application-name "BackendApp" \
+          --deployment-group-name "BackendApp" \
+          --github-location repository=${{github.repository}}, commitId=${{github.sha}}
 
     # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
@@ -61,21 +60,21 @@ jobs:
     # - name: Build with Gradle 8.9
     #   run: gradle build
 
-  dependency-submission:
+  #dependency-submission:
 
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
+   # runs-on: ubuntu-latest
+   #permissions:
+  # contents: write
 
-    steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
+  #  steps:
+  # - uses: actions/checkout@v4
+  #  - name: Set up JDK 17
+  #    uses: actions/setup-java@v4
+  #    with:
+  #      java-version: '17'
+  #      distribution: 'temurin'
 
     # Generates and submits a dependency graph, enabling Dependabot Alerts for all project dependencies.
     # See: https://github.com/gradle/actions/blob/main/dependency-submission/README.md
-    - name: Generate and submit dependency graph
-      uses: gradle/actions/dependency-submission@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+  #  - name: Generate and submit dependency graph
+  #    uses: gradle/actions/dependency-submission@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
