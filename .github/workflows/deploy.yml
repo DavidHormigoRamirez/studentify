@@ -12,42 +12,40 @@ on:
     workflows: ["Test"]  
     types:
       - completed
+  workflow_dispatch:
 
 jobs:
   deploy:
 
     runs-on: ubuntu-22.04
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     permissions:
       contents: read
 
     steps:
     - uses: actions/checkout@v4
-    - uses: aws-actions/configure-aws-credentials@v4
+    - name: aws credentials
+      uses: aws-actions/configure-aws-credentials@v4
       with: 
-        aws-region: us-east-1
+        aws-region: "us-east-1"
         aws-acces-key-id: ${{secrets.ACCES_KY_ID}}
         aws-acces-key: ${{secrets.SECRET_ACCES_KY}}
         aws-session-token: ${{secrets.SESSION_TOKEN}}
-        
-    - name: Install AWS CLI
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y awscli
 
     - name: CodeDeploy
       run: |
         aws deploy create-deployment \
-        --application-name BackendApp \
-        --deployment-group-name BackendAWS \
+        --application-name "BackendApp" \
+        --deployment-group-name "BackendApp" \
         --github-location repository=${{github.repository}}, commitId=${{github.sha}}
 
     # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+    #- name: Setup Gradle
+    #  uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
 
-    - name: Build with Gradle Wrapper
-      run: ./gradlew build
+    #- name: Build with Gradle Wrapper
+    #  run: ./gradlew build
 
   
   
