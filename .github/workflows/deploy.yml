@@ -22,15 +22,15 @@ jobs:
     permissions:
       contents: read
 
-    steps:
-    - uses: actions/checkout@v4
-    - name: aws credentials
-      uses: aws-actions/configure-aws-credentials@v4
-      with: 
-        aws-region: "us-east-1"
-        aws-acces-key-id: ${{secrets.ACCES_KY_ID}}
-        aws-acces-key: ${{secrets.SECRET_ACCES_KY}}
-        aws-session-token: ${{secrets.SESSION_TOKEN}}
+  steps:
+  - uses: actions/checkout@v4
+  - name: aws credentials
+    uses: aws-actions/configure-aws-credentials@v4
+    with: 
+      aws-region: "us-east-1"
+      aws-acces-key-id: ${{secrets.ACCES_KY_ID}}
+      aws-acces-key: ${{secrets.SECRET_ACCES_KY}}
+      aws-session-token: ${{secrets.SESSION_TOKEN}}
 
     - name: CodeDeploy
       run: |
