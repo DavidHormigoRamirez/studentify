@@ -29,5 +29,4 @@ jobs:
         aws deploy create-deployment \
           --application-name Deploy \
           --deployment-group-name TOMCAT \
-          --github-location repository=${{ github.repository }} \
-          commitId=${{ github.sha }}
+          --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
