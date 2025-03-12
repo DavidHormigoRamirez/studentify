@@ -1,0 +1,19 @@
+version: 0.0
+os: linux
+files:
+  - source: studentify.war
+    destination: /opt/tomcat/webapps/
+    file_exists_behavior: OVERWRITE
+hooks:
+  ApllicationsStop:
+    - location: deploy-script/appstop.sh
+      timeout: 300
+      runas: root
+  BeforeInstall: 
+    - location: deploy-script/beforeinstall.sh
+      timeout: 300
+      runas: root
+  BeforeInstall: 
+    - location: deploy-script/appstart.sh
+      timeout: 300
+      runas: root
