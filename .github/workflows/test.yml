@@ -1,0 +1,20 @@
+name: Test Spring project
+on: 
+  push:
+    branches:
+      - main
+jobs:
+  probar:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Copiar codigo en el contenedor
+        uses: action/checkout@v6
+      - name: Instalar el jdk
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '21'
+      - name: Instalar Gradle
+        uses: gradle/actions/setup-gradle@v5
+      - name: Ejecutar los tests
+        run: ./gradlew test
