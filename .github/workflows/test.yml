@@ -16,5 +16,7 @@ jobs:
           java-version: '21'
       - name: Instalar Gradle
         uses: gradle/actions/setup-gradle@v5
+      - name: Darle permisos de ejecucion a gradle
+        run: chmod +x gradlew
       - name: Ejecutar los tests
         run: ./gradlew test
